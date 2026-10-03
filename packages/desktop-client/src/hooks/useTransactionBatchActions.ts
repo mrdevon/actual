@@ -123,7 +123,7 @@ export function useTransactionBatchActions() {
           return;
         }
 
-        let valueToSet = value;
+        let valueToSet: typeof value | null = value;
 
         if (name === 'notes') {
           if (mode === 'prepend') {
@@ -147,6 +147,10 @@ export function useTransactionBatchActions() {
             );
           }
         }
+        if (name === 'tracking_number' && valueToSet === '') {
+          valueToSet = null;
+        }
+
         const transaction = {
           ...trans,
           [name]: valueToSet,
@@ -210,7 +214,12 @@ export function useTransactionBatchActions() {
     };
 
     const pushEditField = () => {
-      if (name !== 'date' && name !== 'amount' && name !== 'notes') {
+      if (
+        name !== 'date' &&
+        name !== 'amount' &&
+        name !== 'notes' &&
+        name !== 'tracking_number'
+      ) {
         return;
       }
 

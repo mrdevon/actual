@@ -2,7 +2,7 @@ import React from 'react';
 import type { CSSProperties } from 'react';
 import { mergeProps } from 'react-aria';
 import type { ListBoxItemRenderProps } from 'react-aria-components';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { Button } from '@actual-app/components/button';
 import { SvgSplit } from '@actual-app/components/icons/v0';
@@ -131,6 +131,7 @@ export function TransactionListItem({
     is_parent: isParent,
     is_child: isChild,
     notes,
+    tracking_number: trackingNumber,
     forceUpcoming,
     schedule: scheduleId,
   } = transaction;
@@ -291,6 +292,20 @@ export function TransactionListItem({
                     {prettyCategory || t('Uncategorized')}
                   </TextOneLine>
                 </View>
+              )}
+              {trackingNumber && (
+                <TextOneLine
+                  style={{
+                    fontSize: 11,
+                    marginTop: 4,
+                    fontWeight: '400',
+                    color: theme.tableText,
+                    textAlign: 'left',
+                    opacity: 0.85,
+                  }}
+                >
+                  <Trans>Number: {{ trackingNumber }}</Trans>
+                </TextOneLine>
               )}
               {displayedNotes && (
                 <TextOneLine

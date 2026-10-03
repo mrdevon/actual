@@ -580,6 +580,16 @@ const compileFunction = saveStack('function', (state, func) => {
       const [arg1] = valArray(state, args, ['string']);
       return typed(`UNICODE_LOWER(${arg1})`, 'string');
     }
+    // Sort key that orders values starting with a digit numerically, ahead
+    // of other non-empty values which are ordered as text
+    case '$naturalSort': {
+      validateArgLength(args, 1);
+      const [arg1] = valArray(state, args, ['string']);
+      return typed(
+        `(CASE WHEN ${arg1} GLOB '[0-9]*' THEN '0' || printf('%030.6f', CAST(${arg1} AS REAL)) WHEN ${arg1} != '' THEN '1' || ${arg1} END)`,
+        'string',
+      );
+    }
 
     // integer/float functions
     case '$neg': {

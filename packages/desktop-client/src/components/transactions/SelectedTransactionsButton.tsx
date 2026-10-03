@@ -31,6 +31,7 @@ type SelectedTransactionsButtonProps = {
       | 'account'
       | 'payee'
       | 'notes'
+      | 'tracking_number'
       | 'category'
       | 'cleared',
     selectedIds: string[],
@@ -404,6 +405,7 @@ export function SelectedTransactionsButton({
               { name: 'account', text: t('Account'), key: 'A' } as const,
               { name: 'payee', text: t('Payee'), key: 'P' } as const,
               { name: 'notes', text: t('Notes'), key: 'N' } as const,
+              { name: 'tracking_number', text: t('Number') } as const,
               { name: 'category', text: t('Category'), key: 'C' } as const,
               { name: 'amount', text: t('Amount'), key: 'M' } as const,
               { name: 'cleared', text: t('Cleared'), key: 'L' } as const,
