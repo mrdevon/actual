@@ -2,7 +2,7 @@ import React from 'react';
 import type { CSSProperties } from 'react';
 import { mergeProps } from 'react-aria';
 import type { ListBoxItemRenderProps } from 'react-aria-components';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@actual-app/components/button';
 import { SvgSplit } from '@actual-app/components/icons/v0';
@@ -304,7 +304,7 @@ export function TransactionListItem({
                     opacity: 0.85,
                   }}
                 >
-                  <Trans>Number: {{ trackingNumber }}</Trans>
+                  {{ trackingNumber }}
                 </TextOneLine>
               )}
               {displayedNotes && (
