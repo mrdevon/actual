@@ -211,16 +211,6 @@ function getField(field?: string) {
   }
 }
 
-function getOrderBy(field: string, ascDesc?: 'asc' | 'desc') {
-  if (field === 'tracking_number') {
-    return [
-      { $naturalSort: '$tracking_number', $dir: ascDesc },
-      { tracking_number: ascDesc },
-    ];
-  }
-  return { [field]: ascDesc };
-}
-
 type AccountInternalProps = {
   accountId?:
     | AccountEntity['id']
@@ -1669,9 +1659,9 @@ class AccountInternal extends PureComponent<
         });
       }
 
-      that.currentQuery = that.currentQuery.orderBy(
-        getOrderBy(sortField, sortAscDesc),
-      );
+      that.currentQuery = that.currentQuery.orderBy({
+        [sortField]: sortAscDesc,
+      });
     };
 
     const sortRootQuery = function (
@@ -1687,9 +1677,9 @@ class AccountInternal extends PureComponent<
           cleared: sortAscDesc,
         });
       } else {
-        that.currentQuery = that.rootQuery.orderBy(
-          getOrderBy(sortField, sortAscDesc),
-        );
+        that.currentQuery = that.rootQuery.orderBy({
+          [sortField]: sortAscDesc,
+        });
       }
     };
 
@@ -1709,9 +1699,9 @@ class AccountInternal extends PureComponent<
         });
       }
 
-      that.currentQuery = that.currentQuery.orderBy(
-        getOrderBy(sortPrevField, sortPrevAscDesc),
-      );
+      that.currentQuery = that.currentQuery.orderBy({
+        [sortField]: sortAscDesc,
+      });
     };
 
     switch (true) {
