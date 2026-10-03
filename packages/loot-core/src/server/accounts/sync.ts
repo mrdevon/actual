@@ -550,7 +550,7 @@ async function normalizeBankSyncTransactions(transactions, acctId) {
     const date = trans[mapping.get('date')] ?? trans.date;
     const payeeName = trans[mapping.get('payee')] ?? trans.payeeName;
     const notes = trans[mapping.get('notes')];
-    const trackingNumberField = mapping.get('number');
+    const trackingNumberField = mapping.get('tracking_number');
     const trackingNumber = trackingNumberField
       ? trans[trackingNumberField]
       : null;
