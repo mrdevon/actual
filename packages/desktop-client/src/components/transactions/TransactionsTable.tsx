@@ -3132,6 +3132,9 @@ export const TransactionTable = forwardRef(
               return showBalances;
             case 'cleared':
               return showCleared;
+            case 'tracking_number':
+              // Opt-in, so only shown when enabled in a column configuration
+              return columnOrder != null;
             default:
               return true;
           }

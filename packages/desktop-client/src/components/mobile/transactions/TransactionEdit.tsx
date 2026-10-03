@@ -1563,8 +1563,7 @@ const TransactionEditInner = memo<TransactionEditInnerProps>(
               placeholder={t('Add a number (optional)')}
               disabled={
                 !!editingField &&
-                editingField !==
-                  getFieldName(transaction.id, 'tracking_number')
+                editingField !== getFieldName(transaction.id, 'tracking_number')
               }
               defaultValue={transaction.tracking_number ?? ''}
               onFocus={() => {

@@ -128,8 +128,7 @@ function getInitialMappings(transactions) {
     fields.find(([name]) => name.toLowerCase().includes('amount')) ||
       fields.find(
         ([name, value]) =>
-          name !== trackingNumberField &&
-          String(value)?.match(/^-?[.,\d]+$/),
+          name !== trackingNumberField && String(value)?.match(/^-?[.,\d]+$/),
       ),
   );
 

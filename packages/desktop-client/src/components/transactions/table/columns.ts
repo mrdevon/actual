@@ -73,7 +73,8 @@ export function useTransactionTableColumnLabels(): Record<
 
 function isColumnHiddenByDefault(id: TransactionTableColumnId): boolean {
   // The running balance and category group columns are opt-in, matching the
-  // app's historical default of not showing them
+  // app's historical default of not showing them. The number column is opt-in
+  // as most users don't track one.
   return id === 'balance' || id === 'group' || id === 'tracking_number';
 }
 

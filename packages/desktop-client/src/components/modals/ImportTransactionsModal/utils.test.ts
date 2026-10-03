@@ -313,14 +313,9 @@ describe('Import transactions', () => {
   });
 
   describe('tracking number mapping', () => {
-    it.each(['Num', 'Number', 'Check'])(
-      'detects the %s header',
-      header => {
-        expect(findTrackingNumberField(['Date', header, 'Payee'])).toBe(
-          header,
-        );
-      },
-    );
+    it.each(['Num', 'Number', 'Check'])('detects the %s header', header => {
+      expect(findTrackingNumberField(['Date', header, 'Payee'])).toBe(header);
+    });
 
     it('only matches exact, case-sensitive headers', () => {
       expect(

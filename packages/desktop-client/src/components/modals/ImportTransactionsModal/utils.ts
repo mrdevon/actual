@@ -171,7 +171,9 @@ export type FieldMapping = {
 const TRACKING_NUMBER_HEADERS = ['Num', 'Number', 'Check'];
 
 export function findTrackingNumberField(fieldNames: string[]) {
-  return fieldNames.find(name => TRACKING_NUMBER_HEADERS.includes(name)) ?? null;
+  return (
+    fieldNames.find(name => TRACKING_NUMBER_HEADERS.includes(name)) ?? null
+  );
 }
 
 export function applyFieldMappings(
