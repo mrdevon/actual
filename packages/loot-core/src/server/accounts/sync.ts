@@ -550,10 +550,7 @@ async function normalizeBankSyncTransactions(transactions, acctId) {
     const date = trans[mapping.get('date')] ?? trans.date;
     const payeeName = trans[mapping.get('payee')] ?? trans.payeeName;
     const notes = trans[mapping.get('notes')];
-    const trackingNumberField = mapping.get('tracking_number');
-    const trackingNumber = trackingNumberField
-      ? trans[trackingNumberField]
-      : null;
+    const trackingNumber = trans[mapping.get('tracking_number')];
 
     // Validate the date because we do some stuff with it. The db
     // layer does better validation, but this will give nicer errors
