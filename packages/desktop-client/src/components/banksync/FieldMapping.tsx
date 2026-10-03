@@ -191,7 +191,7 @@ export function FieldMapping({
                       width: '100%',
                     }}
                     onChange={newValue => {
-                      if (newValue) setMapping(field.actualField, newValue ?? '');
+                      if (newValue) setMapping(field.actualField, newValue);
                     }}
                   />
                 </Cell>
