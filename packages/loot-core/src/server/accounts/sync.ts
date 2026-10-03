@@ -587,7 +587,7 @@ async function normalizeBankSyncTransactions(transactions, acctId) {
         date,
         notes: importNotes && notes ? notes.trim().replace(/#/g, '##') : null,
         tracking_number:
-          trackingNumber != null ? String(trackingNumber).trim() || null : null,
+          trackingNumber != null ? trackingNumber.trim() || null : null,
         category: categoryIds.has(trans.category) ? trans.category : null,
         imported_id,
         imported_payee: trans.imported_payee,
