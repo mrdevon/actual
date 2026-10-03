@@ -19,16 +19,14 @@ import { useBankSyncAccountSettings } from './useBankSyncAccountSettings';
 
 export type TransactionDirection = 'payment' | 'deposit';
 
-type MappableActualFields = 'date' | 'payee' | 'notes' | 'number';
+type MappableActualFields = 'date' | 'payee' | 'notes' | 'tracking_number';
 
 type MappableField = {
   actualField: MappableActualFields;
   syncFields: string[];
-  optional?: boolean;
 };
 export type MappableFieldWithExample = {
   actualField: MappableActualFields;
-  optional?: boolean;
   syncFields: {
     field: string;
     example: string;
@@ -105,8 +103,7 @@ const mappableFields: MappableField[] = [
     ],
   },
   {
-    actualField: 'number',
-    optional: true,
+    actualField: 'tracking_number',
     syncFields: [
       'checkId',
       'checkNumber',
@@ -143,7 +140,6 @@ export const getFields = (
 ): MappableFieldWithExample[] =>
   mappableFields.map(field => ({
     actualField: field.actualField,
-    optional: field.optional,
     syncFields: field.syncFields
       .map(syncField => {
         const value = getByPath(transaction, syncField);
