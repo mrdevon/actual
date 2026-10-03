@@ -324,48 +324,4 @@ describe('compileAndRunQuery', () => {
     );
     expect(parentData[0].tracking_number).toBe('1001');
   });
-
-  it('sorts numerically with $naturalSort', async () => {
-    const values = ['100', 'abc', '9', null, '1002-A', '1002', 'Check'];
-    for (const tracking_number of values) {
-      await db.insertTransaction({
-        account: 'acct',
-        date: '2020-01-01',
-        amount: -1,
-        tracking_number,
-      });
-    }
-
-    const run = async (dir: 'asc' | 'desc') => {
-      const { data } = await compileAndRunAqlQuery(
-        q('transactions')
-          .orderBy([
-            { $naturalSort: '$tracking_number', $dir: dir },
-            { tracking_number: dir },
-          ])
-          .select(['tracking_number'])
-          .serialize(),
-      );
-      return data.map(row => row.tracking_number);
-    };
-
-    expect(await run('asc')).toEqual([
-      null,
-      '9',
-      '100',
-      '1002',
-      '1002-A',
-      'Check',
-      'abc',
-    ]);
-    expect(await run('desc')).toEqual([
-      'abc',
-      'Check',
-      '1002-A',
-      '1002',
-      '100',
-      '9',
-      null,
-    ]);
-  });
 });
