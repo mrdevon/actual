@@ -1700,7 +1700,7 @@ class AccountInternal extends PureComponent<
       }
 
       that.currentQuery = that.currentQuery.orderBy({
-        [sortField]: sortAscDesc,
+        [sortPrevField]: sortPrevAscDesc,
       });
     };
 
