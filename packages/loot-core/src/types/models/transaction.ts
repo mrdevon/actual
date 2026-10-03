@@ -15,7 +15,7 @@ export type TransactionEntity = {
   amount: IntegerAmount;
   payee?: PayeeEntity['id'] | null;
   notes?: string;
-  tracking_number?: string | null;
+  tracking_number?: string;
   date: string;
   imported_id?: string;
   imported_payee?: string;
