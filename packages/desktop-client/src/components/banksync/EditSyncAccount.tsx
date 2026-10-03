@@ -19,14 +19,16 @@ import { useBankSyncAccountSettings } from './useBankSyncAccountSettings';
 
 export type TransactionDirection = 'payment' | 'deposit';
 
-type MappableActualFields = 'date' | 'payee' | 'notes';
+type MappableActualFields = 'date' | 'payee' | 'notes' | 'number';
 
 type MappableField = {
   actualField: MappableActualFields;
   syncFields: string[];
+  optional?: boolean;
 };
 export type MappableFieldWithExample = {
   actualField: MappableActualFields;
+  optional?: boolean;
   syncFields: {
     field: string;
     example: string;
@@ -102,6 +104,20 @@ const mappableFields: MappableField[] = [
       'meta.card_suffix',
     ],
   },
+  {
+    actualField: 'number',
+    optional: true,
+    syncFields: [
+      'checkId',
+      'checkNumber',
+      'check_number',
+      'reference_number',
+      'entryReference',
+      'entry_reference',
+      'transactionId',
+      'transaction_id',
+    ],
+  },
 ];
 
 function getByPath(obj: unknown, path: string): unknown {
@@ -127,6 +143,7 @@ export const getFields = (
 ): MappableFieldWithExample[] =>
   mappableFields.map(field => ({
     actualField: field.actualField,
+    optional: field.optional,
     syncFields: field.syncFields
       .map(syncField => {
         const value = getByPath(transaction, syncField);
