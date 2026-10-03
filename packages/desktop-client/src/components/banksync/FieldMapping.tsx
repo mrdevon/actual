@@ -199,7 +199,7 @@ export function FieldMapping({
                     }}
                     onChange={newValue => {
                       if (newValue || field.optional) {
-                        setMapping(field.actualField, newValue);
+                        setMapping(field.actualField, newValue ?? '');
                       }
                     }}
                   />

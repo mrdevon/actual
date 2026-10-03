@@ -50,6 +50,7 @@ import {
   applyFieldMappings,
   dateFormats,
   filterByStartDate,
+  findTrackingNumberField,
   isDateFormat,
   parseAmountFields,
   parseCategoryFields,
@@ -114,6 +115,10 @@ function getInitialMappings(transactions) {
     return entry ? entry[0] : null;
   }
 
+  const trackingNumberField = findTrackingNumberField(
+    fields.map(([name]) => name),
+  );
+
   const dateField = key(
     fields.find(([name]) => name.toLowerCase().includes('date')) ||
       fields.find(([, value]) => String(value)?.match(/^\d+[-/]\d+[-/]\d+$/)),
@@ -121,7 +126,11 @@ function getInitialMappings(transactions) {
 
   const amountField = key(
     fields.find(([name]) => name.toLowerCase().includes('amount')) ||
-      fields.find(([, value]) => String(value)?.match(/^-?[.,\d]+$/)),
+      fields.find(
+        ([name, value]) =>
+          name !== trackingNumberField &&
+          String(value)?.match(/^-?[.,\d]+$/),
+      ),
   );
 
   const categoryField = key(
@@ -132,7 +141,10 @@ function getInitialMappings(transactions) {
     fields.find(([name]) => name.toLowerCase().includes('payee')) ||
       fields.find(
         ([name]) =>
-          name !== dateField && name !== amountField && name !== categoryField,
+          name !== dateField &&
+          name !== amountField &&
+          name !== categoryField &&
+          name !== trackingNumberField,
       ),
   );
 
@@ -143,7 +155,8 @@ function getInitialMappings(transactions) {
           name !== dateField &&
           name !== amountField &&
           name !== categoryField &&
-          name !== payeeField,
+          name !== payeeField &&
+          name !== trackingNumberField,
       ),
   );
 
@@ -153,7 +166,8 @@ function getInitialMappings(transactions) {
         name !== dateField &&
         name !== amountField &&
         name !== payeeField &&
-        name !== notesField,
+        name !== notesField &&
+        name !== trackingNumberField,
     ),
   );
 
@@ -162,8 +176,22 @@ function getInitialMappings(transactions) {
     amount: amountField,
     payee: payeeField,
     notes: notesField,
+    tracking_number: trackingNumberField,
     inOut: inOutField,
     category: categoryField,
+  };
+}
+
+function withTrackingNumberMapping(mappings, transactions) {
+  if (transactions.length === 0 || 'tracking_number' in mappings) {
+    return mappings;
+  }
+
+  return {
+    ...mappings,
+    tracking_number: findTrackingNumberField(
+      Object.keys(stripCsvImportTransaction(transactions[0])),
+    ),
   };
 }
 
@@ -429,7 +457,7 @@ export function ImportTransactionsModal({
           if (!preserveImportSettings) {
             let mappings = prefs[`csv-mappings-${accountId}`];
             mappings = mappings
-              ? JSON.parse(mappings)
+              ? withTrackingNumberMapping(JSON.parse(mappings), transactions)
               : getInitialMappings(transactions);
 
             // @ts-expect-error - mappings might not have outflow/inflow properties
@@ -712,6 +740,7 @@ export function ImportTransactionsModal({
         amount: amountToInteger(amount),
         cleared: clearOnImport,
         notes: importNotes ? finalTransaction.notes : null,
+        tracking_number: finalTransaction.tracking_number?.trim() || null,
       });
     }
 
@@ -897,8 +926,17 @@ export function ImportTransactionsModal({
     reimportDeleted,
   ]);
 
+  const showTrackingNumber = transactions.some(
+    trans =>
+      (fieldMappings && !trans.isMatchedTransaction
+        ? applyFieldMappings(trans, fieldMappings)
+        : trans
+      ).tracking_number,
+  );
+
   const headers: ComponentProps<typeof TableHeader>['headers'] = [
     { name: t('Date'), width: 200 },
+    ...(showTrackingNumber ? [{ name: t('Number'), width: 100 }] : []),
     { name: t('Payee'), width: 'flex' },
     { name: t('Notes'), width: 'flex' },
     { name: t('Category'), width: 'flex' },
@@ -997,6 +1035,7 @@ export function ImportTransactionsModal({
                       parseDateFormat={parseDateFormat}
                       dateFormat={dateFormat}
                       fieldMappings={fieldMappings}
+                      showTrackingNumber={showTrackingNumber}
                       splitMode={splitMode}
                       inOutMode={inOutMode}
                       outValue={outValue}
