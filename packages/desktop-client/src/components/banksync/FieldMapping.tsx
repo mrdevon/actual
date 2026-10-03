@@ -182,25 +182,16 @@ export function FieldMapping({
                     aria-label={t('Synced field to map to {{field}}', {
                       field: field.actualField,
                     })}
-                    options={[
-                      ...(field.optional
-                        ? [['', t('None')] as [string, string]]
-                        : []),
-                      ...field.syncFields.map(
-                        ({ field }) => [field, field] as [string, string],
-                      ),
-                    ]}
-                    value={
-                      mapping.get(field.actualField) ??
-                      (field.optional ? '' : undefined)
-                    }
+                    options={field.syncFields.map(({ field }) => [
+                      field,
+                      field,
+                    ])}
+                    value={mapping.get(field.actualField)}
                     style={{
                       width: '100%',
                     }}
                     onChange={newValue => {
-                      if (newValue || field.optional) {
-                        setMapping(field.actualField, newValue ?? '');
-                      }
+                      if (newValue) setMapping(field.actualField, newValue ?? '');
                     }}
                   />
                 </Cell>
