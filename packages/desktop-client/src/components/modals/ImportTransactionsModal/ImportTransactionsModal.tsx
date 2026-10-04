@@ -181,19 +181,6 @@ function getInitialMappings(transactions) {
   };
 }
 
-function withTrackingNumberMapping(mappings, transactions) {
-  if (transactions.length === 0 || 'tracking_number' in mappings) {
-    return mappings;
-  }
-
-  return {
-    ...mappings,
-    tracking_number: findTrackingNumberField(
-      Object.keys(stripCsvImportTransaction(transactions[0])),
-    ),
-  };
-}
-
 type LastParse = {
   filename: string;
   fileType: string;
