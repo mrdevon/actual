@@ -123,7 +123,7 @@ export function useTransactionBatchActions() {
           return;
         }
 
-        let valueToSet: typeof value | null = value;
+        let valueToSet = value;
 
         if (name === 'notes') {
           if (mode === 'prepend') {
@@ -146,9 +146,6 @@ export function useTransactionBatchActions() {
               value.useRegex,
             );
           }
-        }
-        if (name === 'tracking_number' && valueToSet === '') {
-          valueToSet = null;
         }
 
         const transaction = {
