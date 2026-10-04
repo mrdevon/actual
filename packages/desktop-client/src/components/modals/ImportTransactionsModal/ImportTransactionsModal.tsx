@@ -1008,7 +1008,7 @@ export function ImportTransactionsModal({
                     !trans.isMatchedTransaction ||
                     (trans.isMatchedTransaction && reconcile),
                 )}
-                fields={['payee', 'category', 'amount']}
+                fields={['tracking_number', 'payee', 'category', 'amount']}
                 style={{ backgroundColor: theme.tableHeaderBackground }}
                 getItemKey={index => String(index)}
                 renderEmpty={() => {
