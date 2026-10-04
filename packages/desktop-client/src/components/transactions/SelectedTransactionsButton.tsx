@@ -248,6 +248,10 @@ export function SelectedTransactionsButton({
     onEdit,
     selectedIds,
   ]);
+  useHotkeys('t', () => onEdit('tracking_number', selectedIds), hotKeyOptions, [
+    onEdit,
+    selectedIds,
+  ]);
   useHotkeys('p', () => onEdit('payee', selectedIds), hotKeyOptions, [
     onEdit,
     selectedIds,
@@ -403,9 +407,9 @@ export function SelectedTransactionsButton({
               { type: Menu.label, name: t('Edit field'), text: '' } as const,
               { name: 'date', text: t('Date'), key: 'E' } as const,
               { name: 'account', text: t('Account'), key: 'A' } as const,
+              { name: 'tracking_number', text: t('Number'), key: 'T' } as const,
               { name: 'payee', text: t('Payee'), key: 'P' } as const,
               { name: 'notes', text: t('Notes'), key: 'N' } as const,
-              { name: 'tracking_number', text: t('Number') } as const,
               { name: 'category', text: t('Category'), key: 'C' } as const,
               { name: 'amount', text: t('Amount'), key: 'M' } as const,
               { name: 'cleared', text: t('Cleared'), key: 'L' } as const,
