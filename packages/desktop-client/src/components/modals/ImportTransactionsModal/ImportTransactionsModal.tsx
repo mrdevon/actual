@@ -456,7 +456,7 @@ export function ImportTransactionsModal({
           if (!preserveImportSettings) {
             let mappings = prefs[`csv-mappings-${accountId}`];
             mappings = mappings
-              ? withTrackingNumberMapping(JSON.parse(mappings), transactions)
+              ? JSON.parse(mappings)
               : getInitialMappings(transactions);
 
             // @ts-expect-error - mappings might not have outflow/inflow properties
@@ -925,17 +925,9 @@ export function ImportTransactionsModal({
     reimportDeleted,
   ]);
 
-  const showTrackingNumber = transactions.some(
-    trans =>
-      (fieldMappings && !trans.isMatchedTransaction
-        ? applyFieldMappings(trans, fieldMappings)
-        : trans
-      ).tracking_number,
-  );
-
   const headers: ComponentProps<typeof TableHeader>['headers'] = [
     { name: t('Date'), width: 200 },
-    ...(showTrackingNumber ? [{ name: t('Number'), width: 100 }] : []),
+    { name: t('Number'), width: 100 },
     { name: t('Payee'), width: 'flex' },
     { name: t('Notes'), width: 'flex' },
     { name: t('Category'), width: 'flex' },
@@ -1034,7 +1026,6 @@ export function ImportTransactionsModal({
                       parseDateFormat={parseDateFormat}
                       dateFormat={dateFormat}
                       fieldMappings={fieldMappings}
-                      showTrackingNumber={showTrackingNumber}
                       splitMode={splitMode}
                       inOutMode={inOutMode}
                       outValue={outValue}
