@@ -726,7 +726,7 @@ export function ImportTransactionsModal({
         amount: amountToInteger(amount),
         cleared: clearOnImport,
         notes: importNotes ? finalTransaction.notes : null,
-        tracking_number: finalTransaction.tracking_number?.trim() || null,
+        tracking_number: finalTransaction.tracking_number || null,
       });
     }
 
@@ -1012,6 +1012,7 @@ export function ImportTransactionsModal({
                       showParsed={filetype === 'csv' || filetype === 'qif'}
                       parseDateFormat={parseDateFormat}
                       dateFormat={dateFormat}
+                      showTrackingNumber={true}
                       fieldMappings={fieldMappings}
                       splitMode={splitMode}
                       inOutMode={inOutMode}

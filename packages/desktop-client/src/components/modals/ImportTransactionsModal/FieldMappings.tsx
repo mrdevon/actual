@@ -64,7 +64,7 @@ export function FieldMappings({
           <SubLabel title={t('Number')} />
           <SelectField
             options={options}
-            value={mappings.tracking_number ?? null}
+            value={mappings.tracking_number}
             onChange={name => onChange('tracking_number', name)}
             hasHeaderRow={hasHeaderRow}
             firstTransaction={transactions[0]}
