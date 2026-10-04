@@ -280,6 +280,7 @@ describe('Import transactions', () => {
         category: null,
         outflow: null,
         inflow: null,
+        tracking_number: null,
       };
       const result = filterByStartDate(
         transactions,

@@ -304,7 +304,7 @@ export function TransactionListItem({
                     opacity: 0.85,
                   }}
                 >
-                  {{ trackingNumber }}
+                  {trackingNumber}
                 </TextOneLine>
               )}
               {displayedNotes && (
