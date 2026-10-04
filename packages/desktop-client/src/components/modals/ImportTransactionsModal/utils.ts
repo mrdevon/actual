@@ -161,7 +161,7 @@ export type FieldMapping = {
   amount: string | null;
   payee: string | null;
   notes: string | null;
-  tracking_number?: string | null;
+  tracking_number: string | null;
   inOut: string | null;
   category: string | null;
   outflow: string | null;
