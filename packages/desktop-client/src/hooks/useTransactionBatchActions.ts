@@ -147,7 +147,6 @@ export function useTransactionBatchActions() {
             );
           }
         }
-
         const transaction = {
           ...trans,
           [name]: valueToSet,
